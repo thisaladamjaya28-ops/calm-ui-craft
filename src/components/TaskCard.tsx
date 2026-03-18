@@ -8,6 +8,12 @@ interface TaskCardProps {
   onClick?: () => void;
 }
 
+const statusClass: Record<string, string> = {
+  "To Do": "status-todo",
+  "In Progress": "status-progress",
+  "Done": "status-done",
+};
+
 const TaskCard = ({ task, onClick }: TaskCardProps) => {
   const assignee = getUserById(task.assignedTo);
   const isOverdue = new Date(task.dueDate) < new Date() && task.status !== "Done";
@@ -15,16 +21,25 @@ const TaskCard = ({ task, onClick }: TaskCardProps) => {
   return (
     <button
       onClick={onClick}
-      className="w-full text-left card-border rounded-lg bg-card p-3 transition-all duration-200 hover:shadow-sm animate-fade-in"
+      className="w-full text-left card-interactive rounded-lg bg-card p-3.5 animate-fade-in"
     >
-      <h4 className="text-sm font-medium text-foreground">{task.title}</h4>
+      <div className="flex items-start justify-between gap-2">
+        <h4 className="text-sm font-medium text-foreground flex-1">{task.title}</h4>
+        <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${statusClass[task.status]}`}>
+          {task.status}
+        </span>
+      </div>
 
-      <div className="mt-2.5 flex items-center justify-between">
+      <div className="mt-3 flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-          <User className="h-3 w-3" />
+          <div className="h-5 w-5 rounded-full bg-accent flex items-center justify-center">
+            <span className="text-[9px] font-semibold text-primary">
+              {assignee?.name.split(" ").map((n) => n[0]).join("") ?? "?"}
+            </span>
+          </div>
           <span>{assignee?.name ?? "Unassigned"}</span>
         </div>
-        <div className={`flex items-center gap-1 text-xs ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>
+        <div className={`flex items-center gap-1 text-xs font-medium ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}>
           <Calendar className="h-3 w-3" />
           <span>{format(parseISO(task.dueDate), "MMM d")}</span>
         </div>
