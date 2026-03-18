@@ -56,7 +56,7 @@ const Index = () => {
 
       <div className="px-4 space-y-3">
         <SearchBar value={search} onChange={setSearch} placeholder="Search projects..." />
-        <FilterChips options={sortOptions} selected={sort} onChange={setSort} />
+        <FilterChips options={sortOptions} selected={sort} onChange={(v) => setSort(v as SortOption)} />
 
         <div className="pt-1 space-y-3">
           {filtered.length === 0 ? (
