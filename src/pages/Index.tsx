@@ -1,16 +1,25 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { projects } from "@/lib/mock-data";
+import ProjectCard from "@/components/ProjectCard";
+import PageHeader from "@/components/PageHeader";
+import { Plus } from "lucide-react";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen pb-20">
+      <PageHeader title="DevSync" subtitle="Your project hub" />
+
+      <div className="px-4 space-y-3">
+        {projects.map((project) => (
+          <ProjectCard key={project.projectId} project={project} />
+        ))}
+
+        <button className="w-full card-border rounded-lg border-dashed p-4 flex items-center justify-center gap-2 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-primary hover:border-primary">
+          <Plus className="h-4 w-4" />
+          New Project
+        </button>
+      </div>
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;
