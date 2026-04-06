@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { projects } from "@/lib/mock-data";
 import ProjectCard from "@/components/ProjectCard";
 import PageHeader from "@/components/PageHeader";
